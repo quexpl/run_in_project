@@ -1,0 +1,3 @@
+alias drupal="run_in_project drupal"
+alias drush="run_in_project drush"
+alias phpunit="run_in_project phpunit"

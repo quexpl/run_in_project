@@ -1,0 +1,23 @@
+#!/bin/sh
+if [ -z "$1" ]; then
+  echo "Usage: $0 <command> <aguments>"
+  echo "$0 drush entity-updates"
+  exit 1
+fi
+
+if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
+    run=$1
+    root=$(git rev-parse --show-toplevel)
+    directories="bin vendor/bin"
+
+    for bin_dir in $directories; do
+       if [ -d "$root/$bin_dir" ] && [ -e "$root/$bin_dir/$run" ] && [ -x "$root/$bin_dir/$run" ]; then
+         shift
+         $root/$bin_dir/$run $@
+       fi
+    done
+
+else
+  echo "Whoops, make sure you are inside git project";
+  exit 1
+fi
